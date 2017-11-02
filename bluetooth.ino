@@ -1,13 +1,10 @@
-/*
- 蓝牙遥控Arduino小车程序
- 功能：小车接收到蓝牙模块发送过来的字符“ONA”前进，字符“ONB”后退，字符“ONC”左转，字符“OND”右转，字符“ONE”停止, 字符“ONF”停止。
+//AITREASURE smart car stem learning kit base on arduino UNO R3, pin 8, 9, 10, 11 connect to L298N IN1~4
 
- */
-const int L298nIn1 = 8;//L298N模块信号输入
-const int L298nIn2 = 9;
-const int L298nIn3 = 10;
+const int L298nIn1 = 8;//define L298N motor drive board input
+const int L298nIn2 = 9;//define MCU pin8,9 as left wheel’s command
+const int L298nIn3 = 10;// define MCU pin10,11 as right wheel’s command
 const int L298nIn4 = 11;
-const String GO = "ONA";//蓝牙遥控器发送信息代码定义
+const String GO = "ONA";//define the remote app code value
 const String BACK = "ONB";
 const String RIGHT = "OND";
 const String LEFT = "ONC";
@@ -21,31 +18,31 @@ void setup()
   pinMode(L298nIn4, OUTPUT);
   Serial.begin(9600);
 }
-void goForward() {//小车前进
+void goForward() {// car go forward function
   digitalWrite(L298nIn1, HIGH);
   digitalWrite(L298nIn2, LOW);
   digitalWrite(L298nIn3, LOW);
   digitalWrite(L298nIn4, HIGH);
 }
-void goBack() {//小车后退
+void goBack() {// car go backward function
   digitalWrite(L298nIn1, LOW);
   digitalWrite(L298nIn2, HIGH);
   digitalWrite(L298nIn3, HIGH);
   digitalWrite(L298nIn4, LOW);
 }
-void goStop() {//小车停止
+void goStop() {// car stop function
   digitalWrite(L298nIn1, LOW);
   digitalWrite(L298nIn2, LOW);
   digitalWrite(L298nIn3, LOW);
   digitalWrite(L298nIn4, LOW);
 }
-void turnRight() {//小车右转
+void turnRight() {// car turn right function
   digitalWrite(L298nIn1, HIGH);
   digitalWrite(L298nIn2, LOW);
   digitalWrite(L298nIn3, LOW);
   digitalWrite(L298nIn4, LOW);
 }
-void turnLeft() {//小车左转
+void turnLeft() {// car turn left function
   digitalWrite(L298nIn1, LOW);
   digitalWrite(L298nIn2, LOW);
   digitalWrite(L298nIn3, LOW);
@@ -60,12 +57,13 @@ String readTtl() {
   }
   return comdata;
 }
-void loop()//主循环函数
+void loop()//main loop function,  MCU will always execute this function
 {
   String s = readTtl();
-  if (s == GO ) goForward();//如果按GO键，小车前进，直到按STOP键停止
-  if (s == LEFT ) turnLeft();
-  if (s == STOP ) goStop();
+  if (s == GO ) goForward();//if got the GO code from app, than execute go //forward function
+  if (s == LEFT ) turnLeft(); //if got the left code from app, than execute 
+                        //turn left function
+  if (s == STOP ) goStop();  
   if (s == RIGHT ) turnRight();
   if (s == BACK ) goBack();
   if (s == STOPP ) goStop();
