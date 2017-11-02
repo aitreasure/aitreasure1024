@@ -1,5 +1,5 @@
 //AITREASURE smart car stem learning kit base on arduino UNO R3, pin 8, 9, 10, 11 connect to L298N IN1~4
-
+//more hardware infomation please visit aitreasure.com
 const int L298nIn1 = 8;//define L298N motor drive board input
 const int L298nIn2 = 9;//define MCU pin8,9 as left wheel’s command
 const int L298nIn3 = 10;// define MCU pin10,11 as right wheel’s command
